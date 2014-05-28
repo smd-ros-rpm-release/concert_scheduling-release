@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-simple-scheduler
+Section: misc
+Priority: extra
+Maintainer: Jack O'Quin <jack.oquin@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), python-catkin-pkg, ros-indigo-catkin, ros-indigo-concert-msgs, ros-indigo-concert-scheduler-requests, ros-indigo-roslint, ros-indigo-rospy, ros-indigo-rostest, ros-indigo-rosunit, ros-indigo-scheduler-msgs, ros-indigo-unique-id
+Homepage: http://wiki.ros.org/concert_simple_scheduler
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-simple-scheduler
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-yaml, ros-indigo-concert-msgs, ros-indigo-concert-scheduler-requests, ros-indigo-rocon-app-manager-msgs, ros-indigo-rocon-std-msgs, ros-indigo-rospy, ros-indigo-scheduler-msgs, ros-indigo-unique-id
+Description: This ROS package provides a simple, experimental, resource scheduler for the Robotics in Concert project.
