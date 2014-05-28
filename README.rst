@@ -1,28 +1,53 @@
-concert_scheduling
-==================
+Overview
+========
 
-Scheduler support packages for the `Robotics in Concert`_ project.
+The `concert_scheduler_requests`_ ROS_ package provides Python 
+interfaces for managing scheduler requests within the `Robotics in
+Concert`_ framework.
 
-*These packages are still in development.*  
+Because different systems require scheduling policies, the ROCON
+design allows for multiple scheduler implementations.  This package
+supplies a common infrastructure for various schedulers to use.
 
-Because different systems require different scheduling policies, the
-ROCON design allows for multiple scheduler implementations.  These ROS
-packages provide some common infrastructure, written in Python, for
-various scheduler implementations to use or modify.
+Scheduler Topics
+----------------
 
-It also includes an example scheduler, which uses that infrastructure
-to create a simple fixed-priority, first-come-first-served
-implementation, probably the simplest scheduler one could actually
-run.
+The ROCON scheduler runs as a ROS node on same master as the ROCON
+conductor, the rocon services and other Solution components.  It
+subscribes to an allocation topic named **/rocon_scheduler** of type
+`scheduler_msgs/SchedulerRequests`_.  Any ROCON service or application
+sending messages to that topic is called a **requester**.  Each
+requester assigns itself a `universally unique identifier`_ and
+subscribes to a feedback topic using the hexadecimal string
+representation of its UUID, in the form
+**/rocon_scheduler_0123456789abcdef0123456789abcdef**. The scheduler
+will provide status feedback on that topic via
+`scheduler_msgs/SchedulerRequests`_ messages.
 
-Links to documentation:
+Scheduler Resource Requests
+---------------------------
 
- * `concert_resource_pool`_ interfaces for handling a pool of scheduler resources
- * `concert_scheduler_requests`_ interfaces for making and handling scheduler requests
- * `concert_simple_scheduler`_ a simple fixed-priority scheduler
+Each `scheduler_msgs/SchedulerRequests`_ message describes all
+resources currently desired by that requester.  The status of each
+resource request is passed back and forth between the requester and
+the scheduler via `scheduler_msgs/Request`_ elements contained in the
+allocation and feedback topics.
 
-.. _`concert_resource_pool`: http://wiki.ros.org/concert_resource_pool
+Handling these messages and managing the states of each resource
+request can be quite tricky, because state changes flow over the two
+topics simultaneously.  So, both schedulers and requesters need to
+perform state transitions carefully and consistently for every
+request.  
+
+This package provides interfaces for schedulers and requesters to
+perform those transitions correctly.
+
 .. _`concert_scheduler_requests`: http://wiki.ros.org/concert_scheduler_requests
-.. _`concert_simple_scheduler`: http://wiki.ros.org/concert_simple_scheduler
 .. _`Robotics in Concert`: http://www.robotconcert.org/wiki/Main_Page
-
+.. _ROS: http://wiki.ros.org
+.. _`scheduler_msgs/Request`:
+   http://docs.ros.org/api/scheduler_msgs/html/msg/Request.html
+.. _`scheduler_msgs/SchedulerRequests`:
+   http://docs.ros.org/api/scheduler_msgs/html/msg/SchedulerRequests.html
+.. _`universally unique identifier`:
+   http://en.wikipedia.org/wiki/Universally_unique_identifier
