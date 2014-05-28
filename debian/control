@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-scheduler-requests
+Section: misc
+Priority: extra
+Maintainer: Jack O'Quin <jack.oquin@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), python-catkin-pkg, ros-indigo-catkin, ros-indigo-roslint, ros-indigo-rostest, ros-indigo-rosunit, ros-indigo-scheduler-msgs
+Homepage: http://wiki.ros.org/concert_scheduler_requests
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-scheduler-requests
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-rospy, ros-indigo-scheduler-msgs, ros-indigo-unique-id
+Description: Python interfaces for managing ROCON scheduler requests.
